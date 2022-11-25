@@ -16,14 +16,14 @@ public class SecurityConfig {
 		http.formLogin(login -> login
 				.loginProcessingUrl("/login")
 				.loginPage("/login")
-				.defaultSuccessUrl("/")
+				.defaultSuccessUrl("/", true)	// 2番目の引数trueによって、ログイン成功後は必ず1番目の引数のパスを表示する
 				.failureUrl("/login?error")
 				.permitAll()
 		).logout(logout -> logout
 				.logoutSuccessUrl("/")
 		).authorizeHttpRequests(authz -> authz
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-				.mvcMatchers("").permitAll()
+				.mvcMatchers("/").permitAll()
 				.mvcMatchers("/general").hasRole("GENERAL")
 				.mvcMatchers("/admin").hasRole("ADMIN")
 				.anyRequest().authenticated()
