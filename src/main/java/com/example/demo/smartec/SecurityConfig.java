@@ -24,10 +24,13 @@ public class SecurityConfig {
 		).authorizeHttpRequests(authz -> authz
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.mvcMatchers("/").permitAll()
-				.mvcMatchers("/general").hasRole("GENERAL")
-				.mvcMatchers("/admin").hasRole("ADMIN")
-				.anyRequest().authenticated()
+//				.mvcMatchers("/general").hasRole("GENERAL")
+//				.mvcMatchers("/admin").hasRole("ADMIN")
+//				.anyRequest().authenticated()
 		);
+		http.authorizeHttpRequests(authz -> authz.mvcMatchers("/general").hasRole("GENERAL"));
+		http.authorizeHttpRequests(authz -> authz.mvcMatchers("/admin").hasRole("ADMIN"));
+		http.authorizeHttpRequests(authz -> authz.anyRequest().authenticated());
 		return http.build();
 	}
 
